@@ -1,0 +1,93 @@
+h1=sig.firwin(61,np.array([1.2/3,1.95/3]),
+window='hann', pass_zero='bandpass')
+fs = 6000
+w, h = sig.freqz(h1, worN=fs)
+plt.figure()
+plt.plot(w/np.pi, np.abs(h))
+plt.xlabel('Normalizovana frekvencija (pi
+rad/sample)')
+plt.ylabel('Amplituda')
+plt.title('Amplitudska karakteristika PO
+filtra')
+plt.show()
+plt.figure()
+plt.plot(w, 20 * np.log10(abs(h)))
+plt.xlabel('Frekvencija (rad/sample)')
+plt.ylabel('Pojacanje (dB)')
+plt.title('Amplitudska karakteristika u dB')
+plt.show()
+n = np.arange(0,300)
+s = np.sin(np.pi*n/6)+np.sin(np.pi*n/
+2)+np.sin(np.pi*n*3/4)
+plt.figure()
+plt.plot(n,s)
+plt.title('signal pre filtriranja')
+plt.show()
+y = sig.convolve(s,h1,mode='same')
+plt.figure()
+plt.plot(n,y)
+plt.title('signal nakon filtriranja')
+plt.show()
+
+=============
+pre i posle kvantizacije
+
+import numpy as np
+import matplotlib.pyplot as plt
+plt.rcParams ['figure.figsize'] [10,5]
+f0 = 2
+t = np.arange (0, (3/10) +0.01,0.01)
+S
+= 5*np.sin(2*np.pi*f0*t)
+Ts = 0.04
+=
+ts = np.arange (0, (3/f0) + Ts, Ts)
+s_ts= 5*np.sin (2*np.pi*f0*ts)
+mins = -5
+maxs = 5
+deltaQ = (maxs-mins)/8
+s_q = np.floor(s_ts*deltaQ) *deltaQ+deltaQ/2
+plt. figure ()
+plt.plot(t, s).
+plt.ylim ((-5,5))
+plt.title ('Signal pre odabiranja')
+plt.show()
+plt. figure ()
+plt.plot (ts, s_ts)
+plt.ylim ((-5,5)')
+plt.title('Signal nakon odabiranja')
+plt.show()
+plt.figure ()
+plt.plot(ts, s_q)
+plt.ylim ((-5,5))
+plt.title ('Signal nakon kvantizacije')
+
+
+======
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.signal as sig
+plt.rcParams ['figure.figsize'] = [15, 10]
+a = np.array ([1,2,-1, -2,1])
+b = np.array ([2,-1, 1, 3])
+na = np.arange (-2,4)
+nb = np.arange (0, 6)
+plt. figure ()
+plt.stem (na, a, use line collection = 'True')
+mmmm
+plt.title('a (n)')
+plt.show()
+plt.figure ()
+plt.stem (nb, b, use line collection = True)
+plt.title('b (n)')
+plt.show()
+nc = np.arange (na [0] +nb [0], na [-1]+nb [-1]+1)
+c = sig.convolve (a, b, mode='same')
+p = int (np. round ((len (b)-1)/2))
+nc1= nc [p:p+len (a)]
+plt.figure ()
+plt.stem (nc1, c, use_line_collection=True)
+plt.title('c (n)')
+plt.show()
